@@ -7,7 +7,7 @@ const NavBar = () => {
       <div className="col-md-4">
         <div className="logo">
           <Link exact to="/">
-            <img src="https://www.freepnglogos.com/uploads/pubg-png/home-pubg-skins-21.png" />
+            <img src="https://buddypress.org/media/buddypress_logo.png" alt="logo" />
           </Link>
         </div>
       </div>

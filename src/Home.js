@@ -8,7 +8,6 @@ class Home extends Component {
   render() {
     return (
       <div className="container">
-        <NavBar />
         <div className="dashboard">
           <div className="row">
             <div className="col-4">

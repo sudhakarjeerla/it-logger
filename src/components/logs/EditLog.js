@@ -1,49 +1,107 @@
-import React, { Component } from "react";
-import NavBar from "../NavBar/NavBar";
-import "./style.css";
+import React, { Fragment, useState, useEffect } from "react";
+import { updateLog } from "../../actions/logActions";
+import { connect } from "react-redux";
+import {
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  ModalFooter,
+  Button
+} from "reactstrap";
 
-class EditLog extends Component {
-  render() {
-    return (
-      <div className="container">
-        <NavBar />
-        <div className="form-display">
-        <h2>Edit Logs</h2>
-          <div className="row">
-             
-            <div className="offset-md-3 col-md-8">
-              <form>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Email address</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="exampleInputEmail1"
-                    aria-describedby="emailHelp"
-                    placeholder="Enter email"
-                  />
-                  
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password</label>
-                  <input
-                    type="password"
-                    class="form-control"
-                    id="exampleInputPassword1"
-                    placeholder="Password"
-                  />
-                </div>
+const EditLog = props => {
+  const [message, setMessage] = useState("");
+  const [attention, setAttention] = useState(false);
+  const [tech, setTech] = useState("");
 
-                <button type="submit" class="btn btn-dark btn-lg btn-block">
-                  Edit
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+  useEffect(() => {
+    if (props.current) {
+      props.toggle();
+      setMessage(props.current.message);
+      setAttention(props.current.attention);
+      setTech(props.current.tech);
+    }
+  }, [props.current]);
 
-export default EditLog;
+  const onSubmit = () => {
+    if (message === "") {
+      alert("please enter ");
+    } else {
+      const updLog = {
+        id: props.current.id,
+        message,
+        attention,
+        tech,
+        date: new Date()
+      };
+
+      props.updateLog(updLog);
+
+      // Clear Fields
+      setMessage("");
+      setTech("");
+      setAttention(false);
+      props.toggle();
+    }
+  };
+
+  return (
+    <Fragment>
+      <Modal isOpen={props.modal} toggle={props.toggle}>
+        <ModalHeader toggle={props.toggle}>Edit Logs</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <Label htmlFor="logMessage">Log Messaage</Label>
+              <Input
+                type="text"
+                name="logMessage"
+                value={message}
+                onChange={e => setMessage(e.target.value)}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="exampleSelect">Select</Label>
+              <Input
+                type="select"
+                name="select"
+                value={tech}
+                onChange={e => setTech(e.target.value)}
+              >
+                <option>SJ</option>
+                <option>VV</option>
+                <option>SV</option>
+              </Input>
+            </FormGroup>
+            <FormGroup check>
+              <Label check>
+                <Input
+                  type="checkbox"
+                  checked={attention}
+                  value={attention}
+                  onChange={e => setAttention(!attention)}
+                />
+                Attention
+              </Label>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button onClick={onSubmit} color="primary">
+            Add Log
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </Fragment>
+  );
+};
+
+const mapStateToProps = state => {
+  return state;
+};
+
+export default connect(mapStateToProps, { updateLog })(EditLog);

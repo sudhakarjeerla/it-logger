@@ -1,9 +1,11 @@
-import React from 'react';
+import React from "react";
 
 const Preloader = () => {
   return (
-    <div className='progress blue lighten-4'>
-      <div className='indeterminate blue' />
+    <div class="text-center mt-5">
+      <div class="spinner-border text-info " style={{width: '4rem', height: '4rem'}} role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
     </div>
   );
 };

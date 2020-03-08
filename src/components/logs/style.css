@@ -3,6 +3,9 @@
     min-height: 500px;
     padding: 20px 0;
 }
+table{
+    background: rgb(237, 241, 247);
+}
 .form-display form{
     width: 70%;
     background: #0ab3bb;
@@ -21,4 +24,10 @@ label {
     padding: 5px 0;
     border-radius: 5px;
     margin: 25px 20px !important;
+}
+.text-blue{
+    color: rgb(15, 90, 187);
+}
+.text-red{
+    color: rgb(224, 57, 57);
 }
